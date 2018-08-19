@@ -125,7 +125,7 @@ impl EtaggedFileResponse {
 
             Ok(EtaggedFileResponse {
                 data,
-                is_etag_match: false,
+                is_etag_match: true,
                 etag,
                 content_type: None,
                 content_length: None,
