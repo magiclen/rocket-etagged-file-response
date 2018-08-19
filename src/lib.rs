@@ -20,7 +20,7 @@ use rocket_etag_if_none_match::EtagIfNoneMatch;
 
 use rocket::response::{self, Response, Responder};
 use rocket::http::{Status, hyper::header::{ETag, EntityTag}};
-use rocket::request::Request;
+use rocket::request::{Request, State};
 
 const FILE_RESPONSE_CHUNK_SIZE: u64 = 4096;
 
@@ -62,7 +62,7 @@ impl<'a> Responder<'a> for EtaggedFileResponse {
 
 impl EtaggedFileResponse {
     /// Create a EtaggedFileResponse instance from a path of a file.
-    pub fn from<P: AsRef<Path>>(etag_map: EtagMap, etag_if_none_match: EtagIfNoneMatch, path: P) -> io::Result<EtaggedFileResponse> {
+    pub fn from<P: AsRef<Path>>(etag_map: State<EtagMap>, etag_if_none_match: EtagIfNoneMatch, path: P) -> io::Result<EtaggedFileResponse> {
         let path = match path.as_ref().canonicalize() {
             Ok(path) => path,
             Err(e) => Err(e)?
