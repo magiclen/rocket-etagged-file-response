@@ -22,8 +22,7 @@ use rocket::response::{self, Response, Responder};
 use rocket::http::{Status, hyper::header::{ETag, EntityTag}};
 use rocket::request::Request;
 
-#[doc(hidden)]
-pub const FILE_RESPONSE_CHUNK_SIZE: u64 = 4096;
+const FILE_RESPONSE_CHUNK_SIZE: u64 = 4096;
 
 /// This map should be managed by a rocket instance.
 pub type EtagMap = Mutex<HashMap<String, String>>;
