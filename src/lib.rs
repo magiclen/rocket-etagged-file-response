@@ -29,7 +29,7 @@ pub type EtagMap = Mutex<HashMap<String, String>>;
 
 /// The response struct used for offering static files with **Etag** cache.
 pub struct EtaggedFileResponse {
-    pub data: Box<Read>,
+    pub data: Option<Box<Read>>,
     pub is_etag_match: bool,
     pub etag: String,
     pub content_type: Option<String>,
@@ -53,7 +53,7 @@ impl<'a> Responder<'a> for EtaggedFileResponse {
                 response.raw_header("Content-Length", content_length.to_string());
             }
 
-            response.chunked_body(self.data, FILE_RESPONSE_CHUNK_SIZE);
+            response.chunked_body(self.data.unwrap(), FILE_RESPONSE_CHUNK_SIZE);
         }
 
         response.ok()
@@ -121,10 +121,8 @@ impl EtaggedFileResponse {
         };
 
         if is_etag_match {
-            let data = Box::from(File::open(&path)?);
-
             Ok(EtaggedFileResponse {
-                data,
+                data: None,
                 is_etag_match: true,
                 etag,
                 content_type: None,
@@ -148,7 +146,7 @@ impl EtaggedFileResponse {
             let data = Box::from(File::open(&path)?);
 
             Ok(EtaggedFileResponse {
-                data,
+                data: Some(data),
                 is_etag_match: false,
                 etag,
                 content_type,
