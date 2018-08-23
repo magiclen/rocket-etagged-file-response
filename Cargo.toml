@@ -1,6 +1,6 @@
 [package]
 name = "rocket-etagged-file-response"
-version = "0.2.3"
+version = "0.3.0"
 authors = ["Magic Len <len@magiclen.org>"]
 repository = "https://github.com/magiclen/rocket-etagged-file-response"
 homepage = "https://magiclen.org/rocket-etagged-file-response"

@@ -3,7 +3,9 @@
 
 extern crate mime_guess;
 extern crate crc;
-extern crate rocket_etag_if_none_match;
+
+pub extern crate rocket_etag_if_none_match;
+
 extern crate rocket;
 
 use std::sync::Mutex;
