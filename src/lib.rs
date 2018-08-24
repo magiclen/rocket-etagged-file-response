@@ -2,7 +2,7 @@
 //! This crate provides a response struct used for offering static files with **Etag** cache.
 
 extern crate mime_guess;
-extern crate crc;
+extern crate crc_any;
 
 pub extern crate rocket_etag_if_none_match;
 
@@ -16,7 +16,7 @@ use std::io::{self, ErrorKind, Read, BufReader};
 
 use mime_guess::get_mime_type_str;
 
-use crc::{crc64, Hasher64};
+use crc_any::CRC;
 
 use rocket_etag_if_none_match::EtagIfNoneMatch;
 
@@ -81,7 +81,7 @@ impl EtaggedFileResponse {
         let etag = match etag {
             Some(etag) => etag,
             None => {
-                let mut digest = crc64::Digest::new(crc64::ECMA);
+                let mut crc64ecma = CRC::crc64ecma();
 
                 let mut buffer = [0u8; FILE_RESPONSE_CHUNK_SIZE as usize];
 
@@ -95,7 +95,7 @@ impl EtaggedFileResponse {
                             if c == 0 {
                                 break;
                             }
-                            digest.write(&buffer[0..c]);
+                            crc64ecma.digest(&buffer[0..c]);
                         }
                         Err(error) => {
                             return Err(error);
@@ -103,7 +103,7 @@ impl EtaggedFileResponse {
                     }
                 }
 
-                let crc64 = digest.sum64();
+                let crc64 = crc64ecma.get_crc();
 
                 let etag = format!("{:X}", crc64);
 

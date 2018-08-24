@@ -1,6 +1,6 @@
 [package]
 name = "rocket-etagged-file-response"
-version = "0.3.0"
+version = "0.4.0"
 authors = ["Magic Len <len@magiclen.org>"]
 repository = "https://github.com/magiclen/rocket-etagged-file-response"
 homepage = "https://magiclen.org/rocket-etagged-file-response"
@@ -14,5 +14,5 @@ license = "MIT"
 rocket = "0.3.15"
 rocket_codegen = "0.3.15"
 mime_guess = "1.8.6"
-crc = "1.8.1"
+crc-any = "1.0.0"
 rocket-etag-if-none-match = "0.1.0"
