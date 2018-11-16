@@ -1,7 +1,9 @@
 Etagged File Response for Rocket Framework
 ====================
 
-This crate provides a response struct used for offering static files with **Etag** cache.
+This crate was deprecated, use `rocket-etagged-raw-response` instead.
+
+https://crates.io/crates/rocket-etagged-raw-response
 
 ## License
 
